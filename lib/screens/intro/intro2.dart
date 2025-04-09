@@ -7,38 +7,42 @@ class IntroductionScreen2 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Get screen dimensions for responsive sizing
+    final Size screenSize = MediaQuery.of(context).size;
+    final double logoSize = screenSize.width * 0.3; // 30% of screen width
+    final double illustrationWidth = screenSize.width * 0.8; // 80% of screen width
+    
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            // Logo at the top with allocated space
-            SizedBox(
-              height: 150, // Ensures space is allocated for the logo
-              child: Padding(
-                padding: const EdgeInsets.only(top: 5.0), // Add top spacing
-                child: Align(
-                  alignment: Alignment.topCenter,
-                  child: Image.asset(
-                    'assets/Logo.png', // Ensure this is in your assets folder
-                    width: 1200, // Adjust the size
-                    height: 1200,
-
-                  ),
+            // Logo at the top with flexible container
+            Container(
+              height: screenSize.height * 0.15, // 15% of screen height
+              padding: const EdgeInsets.only(top: 5.0),
+              child: Align(
+                alignment: Alignment.topCenter,
+                child: Image.asset(
+                  'assets/Logo.png',
+                  width: logoSize,
+                  height: logoSize,
+                  fit: BoxFit.contain,
                 ),
               ),
             ),
 
-            const SizedBox(height: 50),
+            SizedBox(height: screenSize.height * 0.03), // 3% of screen height
 
-            // Illustration Image
+            // Illustration Image with responsive width
             Image.asset(
-              'assets/screen3.png', // Ensure this is in your assets folder
-              width: 380, // Adjust as needed
+              'assets/screen3.png',
+              width: illustrationWidth,
+              fit: BoxFit.contain,
             ),
 
-            const SizedBox(height: 20),
+            SizedBox(height: screenSize.height * 0.02), // 2% of screen height
 
             // Heading
             const Text(
@@ -51,7 +55,7 @@ class IntroductionScreen2 extends StatelessWidget {
               ),
             ),
 
-            const SizedBox(height: 10),
+            SizedBox(height: screenSize.height * 0.01), // 1% of screen height
 
             // Paragraph
             const Padding(
@@ -76,7 +80,7 @@ class IntroductionScreen2 extends StatelessWidget {
                 children: [
                   // Next Button with Shadow Effect
                   SizedBox(
-                    width: 320,
+                    width: screenSize.width * 0.8, // 80% of screen width
                     height: 50,
                     child: Container(
                       decoration: BoxDecoration(
@@ -119,11 +123,11 @@ class IntroductionScreen2 extends StatelessWidget {
                     ),
                   ),
 
-                  const SizedBox(height: 20),
+                  SizedBox(height: screenSize.height * 0.02), // 2% of screen height
 
                   // Skip Button with Shadow Effect
                   SizedBox(
-                    width: 320,
+                    width: screenSize.width * 0.8, // 80% of screen width
                     height: 50,
                     child: Container(
                       decoration: BoxDecoration(
@@ -170,7 +174,7 @@ class IntroductionScreen2 extends StatelessWidget {
               ),
             ),
 
-            const SizedBox(height: 30), // Add bottom spacing
+            SizedBox(height: screenSize.height * 0.03), // 3% of screen height
           ],
         ),
       ),
