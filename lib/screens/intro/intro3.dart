@@ -6,194 +6,175 @@ class IntroductionScreen3 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Get screen dimensions for responsive sizing
+    final Size screenSize = MediaQuery.of(context).size;
+    final double logoSize = screenSize.width * 0.3; // 30% of screen width
+    final double illustrationWidth = screenSize.width * 0.8; // 80% of screen width
+    
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
-        child: LayoutBuilder(
-          builder: (context, constraints) {
-            // Get screen dimensions for responsive sizing
-            final Size screenSize = MediaQuery.of(context).size;
-            
-            // Calculate sizes based on available height
-            final double availableHeight = constraints.maxHeight;
-            final double logoHeight = availableHeight * 0.15; // 15% of available height
-            final double illustrationHeight = availableHeight * 0.35; // 35% of available height
-            final double textHeight = availableHeight * 0.15; // 15% of available height
-            final double buttonHeight = availableHeight * 0.25; // 25% of available height
-            
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                // Logo at the top with dynamic height
-                Container(
-                  height: logoHeight,
-                  padding: const EdgeInsets.only(top: 5.0),
-                  child: Align(
-                    alignment: Alignment.topCenter,
-                    child: Image.asset(
-                      'assets/Logo.png',
-                      fit: BoxFit.contain,
-                    ),
-                  ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            // Logo at the top with flexible container
+            Container(
+              height: screenSize.height * 0.15, // 15% of screen height
+              padding: const EdgeInsets.only(top: 5.0),
+              child: Align(
+                alignment: Alignment.topCenter,
+                child: Image.asset(
+                  'assets/Logo.png',
+                  width: logoSize,
+                  height: logoSize,
+                  fit: BoxFit.contain,
                 ),
+              ),
+            ),
 
-                // Flexible space for illustration
-                Flexible(
-                  flex: 7, // Takes 7 parts of available space
-                  child: Container(
-                    height: illustrationHeight,
-                    child: Image.asset(
-                      'assets/screen4.png',
-                      fit: BoxFit.contain,
-                    ),
-                  ),
+            SizedBox(height: screenSize.height * 0.03), // 3% of screen height
+
+            // Illustration Image with responsive width
+            Image.asset(
+              'assets/screen4.png',
+              width: illustrationWidth,
+              fit: BoxFit.contain,
+            ),
+
+            SizedBox(height: screenSize.height * 0.02), // 2% of screen height
+
+            // Heading
+            const Text(
+              'Smart AI Moderation & Notifications',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                color: Color(0xFF125F9D),
+              ),
+            ),
+
+            SizedBox(height: screenSize.height * 0.01), // 1% of screen height
+
+            // Paragraph
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 30), // Center text
+              child: Text(
+                'Stay informed with instant notifications.'
+                    'AI-powered moderation ensures a safe and focused learning environment by filtering inappropriate content.',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Color(0xFF125F9D),
                 ),
+              ),
+            ),
 
-                // Text content with dynamic height
-                Flexible(
-                  flex: 3, // Takes 3 parts of available space
-                  child: Container(
-                    height: textHeight,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        // Heading
-                        const Text(
-                          'Smart AI Moderation & Notifications',
-                          textAlign: TextAlign.center,
+            const Spacer(), // Push buttons to the bottom
+
+            // Buttons
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Column(
+                children: [
+                  // Next Button with Shadow Effect
+                  SizedBox(
+                    width: screenSize.width * 0.8, // 80% of screen width
+                    height: 50,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: const Color(0xFF3D7FBA), // Slightly lighter version of 0xFF0F95A2
+                        borderRadius: BorderRadius.circular(15),
+                        boxShadow: [
+                          BoxShadow(
+                            color: const Color(0xFF125F9D).withOpacity(0.3), // Softer shadow
+                            spreadRadius: 1,
+                            blurRadius: 6, // Increase blur for softer effect
+                            offset: const Offset(0, 4), // Shadow direction
+                          ),
+                        ],
+                      ),
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.transparent, // Transparent to inherit container color
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                        ),
+                        onPressed: () {
+                          // Navigate to Next Screen
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>LoginScreen(),
+                            ),
+                          );
+                        },
+                        child: const Text(
+                          'Next',
                           style: TextStyle(
-                            fontSize: 24,
+                            fontSize: 22,
+                            color: Colors.white,
                             fontWeight: FontWeight.bold,
-                            color: Color(0xFF125F9D),
                           ),
                         ),
-
-                        const SizedBox(height: 10),
-
-                        // Paragraph
-                        const Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 30),
-                          child: Text(
-                            'Stay informed with instant notifications.'
-                                'AI-powered moderation ensures a safe and focused learning environment by filtering inappropriate content.',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Color(0xFF125F9D),
-                            ),
-                          ),
-                        ),
-                      ],
+                      ),
                     ),
                   ),
-                ),
 
-                // Buttons with dynamic height
-                Flexible(
-                  flex: 5, // Takes 5 parts of available space
-                  child: Container(
-                    height: buttonHeight,
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        // Next Button with Shadow Effect
-                        SizedBox(
-                          width: screenSize.width * 0.8,
-                          height: 50,
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: const Color(0xFF3D7FBA),
-                              borderRadius: BorderRadius.circular(15),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: const Color(0xFF125F9D).withOpacity(0.3),
-                                  spreadRadius: 1,
-                                  blurRadius: 6,
-                                  offset: const Offset(0, 4),
-                                ),
-                              ],
-                            ),
-                            child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.transparent,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(15),
-                                ),
-                              ),
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>LoginScreen(),
-                                  ),
-                                );
-                              },
-                              child: const Text(
-                                'Next',
-                                style: TextStyle(
-                                  fontSize: 22,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
+                  SizedBox(height: screenSize.height * 0.02), // 2% of screen height
+
+                  // Skip Button with Shadow Effect
+                  SizedBox(
+                    width: screenSize.width * 0.8, // 80% of screen width
+                    height: 50,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFF6F4F4), // Light grey background
+                        borderRadius: BorderRadius.circular(15),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.5), // Lighter shadow for skip button
+                            spreadRadius: 1,
+                            blurRadius: 10,
+                            offset: const Offset(0, 6), // Push shadow downward
+                          ),
+                        ],
+                      ),
+                      child: OutlinedButton(
+                        style: OutlinedButton.styleFrom(
+                          backgroundColor: Colors.transparent, // Transparent to inherit container color
+                          side: const BorderSide(color: Color(0xFFF5F5F5)), // Border color
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15),
                           ),
                         ),
-
-                        const SizedBox(height: 20),
-
-                        // Skip Button with Shadow Effect
-                        SizedBox(
-                          width: screenSize.width * 0.8,
-                          height: 50,
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: const Color(0xFFF6F4F4),
-                              borderRadius: BorderRadius.circular(15),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.withOpacity(0.5),
-                                  spreadRadius: 1,
-                                  blurRadius: 10,
-                                  offset: const Offset(0, 6),
-                                ),
-                              ],
+                        onPressed: () {
+                          // Skip to login Screen
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>LoginScreen(),
                             ),
-                            child: OutlinedButton(
-                              style: OutlinedButton.styleFrom(
-                                backgroundColor: Colors.transparent,
-                                side: const BorderSide(color: Color(0xFFF5F5F5)),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(15),
-                                ),
-                              ),
-                              onPressed: () {
-                                Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>LoginScreen(),
-                                  ),
-                                );
-                              },
-                              child: const Text(
-                                'Skip',
-                                style: TextStyle(
-                                  fontSize: 22,
-                                  color: Color(0xFF125F9D),
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
+                          );
+                        },
+                        child: const Text(
+                          'Skip',
+                          style: TextStyle(
+                            fontSize: 22,
+                            color: Color(0xFF125F9D), // Correct text color
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
-                      ],
+                      ),
                     ),
                   ),
-                ),
-              ],
-            );
-          },
+                ],
+              ),
+            ),
+
+            SizedBox(height: screenSize.height * 0.03), // 3% of screen height
+          ],
         ),
       ),
     );
