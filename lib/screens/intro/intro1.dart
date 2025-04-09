@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'intro2.dart'; // Import intro2.dart
-import 'login.dart'; // Import login.dart
+import 'intro2.dart'; // Import intro2.dart from same directory
+import '../auth/login.dart'; // Updated import path for login.dart
 
 class IntroductionScreen1 extends StatelessWidget {
   const IntroductionScreen1({super.key});

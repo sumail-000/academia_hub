@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'intro1.dart'; // Import IntroductionScreen
+import 'screens/intro/intro1.dart'; // Updated import path
 
 void main() {
   runApp(const MyApp());

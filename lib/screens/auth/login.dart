@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'signup.dart'; // Import the signup screen
+import 'signup.dart'; // Import signup.dart from same directory
 
 void main() {
   runApp(LoginApp());
