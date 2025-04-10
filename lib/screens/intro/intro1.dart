@@ -1,182 +1,189 @@
 import 'package:flutter/material.dart';
-import 'intro2.dart'; // Import intro2.dart from same directory
-import '../auth/login.dart'; // Updated import path for login.dart
+import 'intro2.dart';
+import '../auth/login.dart';
 
 class IntroductionScreen1 extends StatelessWidget {
   const IntroductionScreen1({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // Get screen dimensions for responsive sizing
     final Size screenSize = MediaQuery.of(context).size;
-    final double logoSize = screenSize.width * 0.3; // 30% of screen width
-    final double illustrationWidth = screenSize.width * 0.8; // 80% of screen width
-    
+    final bool isLandscape = screenSize.width > screenSize.height;
+    final double logoSize = screenSize.width * 0.3;
+    final double illustrationWidth = screenSize.width * 0.8;
+
+    Widget content = Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        // Logo
+        Container(
+          height: screenSize.height * 0.15,
+          padding: const EdgeInsets.only(top: 5.0),
+          child: Align(
+            alignment: Alignment.topCenter,
+            child: Image.asset(
+              'assets/Logo.png',
+              width: logoSize,
+              height: logoSize,
+              fit: BoxFit.contain,
+            ),
+          ),
+        ),
+
+        SizedBox(height: screenSize.height * 0.03),
+
+        // Illustration
+        Image.asset(
+          'assets/screen2.png',
+          width: illustrationWidth,
+          fit: BoxFit.contain,
+        ),
+
+        SizedBox(height: screenSize.height * 0.02),
+
+        // Heading
+        const Text(
+          'Seamless Notes Sharing',
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+            color: Color(0xFF125F9D),
+          ),
+        ),
+
+        SizedBox(height: screenSize.height * 0.01),
+
+        // Paragraph
+        const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 30),
+          child: Text(
+            'Easily share and access study materials, notes, and assignments. '
+                'Filter by university, department, and semester for quick retrieval.',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 16,
+              color: Color(0xFF125F9D),
+            ),
+          ),
+        ),
+
+        const Spacer(),
+
+        // Buttons
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: Column(
+            children: [
+              // Next Button
+              SizedBox(
+                width: screenSize.width * 0.8,
+                height: 50,
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: const Color(0xFF3D7FBA),
+                    borderRadius: BorderRadius.circular(15),
+                    boxShadow: [
+                      BoxShadow(
+                        color: const Color(0xFF125F9D).withOpacity(0.3),
+                        spreadRadius: 1,
+                        blurRadius: 6,
+                        offset: const Offset(0, 4),
+                      ),
+                    ],
+                  ),
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.transparent,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                    ),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const IntroductionScreen2(),
+                        ),
+                      );
+                    },
+                    child: const Text(
+                      'Next',
+                      style: TextStyle(
+                        fontSize: 22,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+
+              SizedBox(height: screenSize.height * 0.02),
+
+              // Skip Button
+              SizedBox(
+                width: screenSize.width * 0.8,
+                height: 50,
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFF6F4F4),
+                    borderRadius: BorderRadius.circular(15),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.5),
+                        spreadRadius: 1,
+                        blurRadius: 10,
+                        offset: const Offset(0, 6),
+                      ),
+                    ],
+                  ),
+                  child: OutlinedButton(
+                    style: OutlinedButton.styleFrom(
+                      backgroundColor: Colors.transparent,
+                      side: const BorderSide(color: Color(0xFFF5F5F5)),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                    ),
+                    onPressed: () {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => LoginScreen(),
+                        ),
+                      );
+                    },
+                    child: const Text(
+                      'Skip',
+                      style: TextStyle(
+                        fontSize: 22,
+                        color: Color(0xFF125F9D),
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+
+        SizedBox(height: screenSize.height * 0.03),
+      ],
+    );
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            // Logo at the top with flexible container
-            Container(
-              height: screenSize.height * 0.15, // 15% of screen height
-              padding: const EdgeInsets.only(top: 5.0),
-              child: Align(
-                alignment: Alignment.topCenter,
-                child: Image.asset(
-                  'assets/Logo.png',
-                  width: logoSize,
-                  height: logoSize,
-                  fit: BoxFit.contain,
-                ),
-              ),
-            ),
-
-            SizedBox(height: screenSize.height * 0.03), // 3% of screen height
-
-            // Illustration Image with responsive width
-            Image.asset(
-              'assets/screen2.png',
-              width: illustrationWidth,
-              fit: BoxFit.contain,
-            ),
-
-            SizedBox(height: screenSize.height * 0.02), // 2% of screen height
-
-            // Heading
-            const Text(
-              'Seamless Notes Sharing',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-                color: Color(0xFF125F9D),
-              ),
-            ),
-
-            SizedBox(height: screenSize.height * 0.01), // 1% of screen height
-
-            // Paragraph
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 30), // Center text
-              child: Text(
-                'Easily share and access study materials, notes, and assignments. '
-                    'Filter by university, department, and semester for quick retrieval.',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 16,
-                  color: Color(0xFF125F9D),
-                ),
-              ),
-            ),
-
-            const Spacer(), // Push buttons to the bottom
-
-            // Buttons
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Column(
-                children: [
-                  // Next Button with Shadow Effect
-                  SizedBox(
-                    width: screenSize.width * 0.8, // 80% of screen width
-                    height: 50,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: const Color(0xFF3D7FBA), // Slightly lighter version of 0xFF0F95A2
-                        borderRadius: BorderRadius.circular(15),
-                        boxShadow: [
-                          BoxShadow(
-                            color: const Color(0xFF125F9D).withOpacity(0.3), // Softer shadow
-                            spreadRadius: 1,
-                            blurRadius: 6, // Increase blur for softer effect
-                            offset: const Offset(0, 4), // Shadow direction
-                          ),
-                        ],
-                      ),
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.transparent, // Transparent to inherit container color
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15),
-                          ),
-                        ),
-                        onPressed: () {
-                          // Navigate to Next Screen
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const IntroductionScreen2(),
-                            ),
-                          );
-                        },
-                        child: const Text(
-                          'Next',
-                          style: TextStyle(
-                            fontSize: 22,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-
-                  SizedBox(height: screenSize.height * 0.02), // 2% of screen height
-
-                  // Skip Button with Shadow Effect
-                  SizedBox(
-                    width: screenSize.width * 0.8, // 80% of screen width
-                    height: 50,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: const Color(0xFFF6F4F4), // Light grey background
-                        borderRadius: BorderRadius.circular(15),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.5), // Lighter shadow for skip button
-                            spreadRadius: 1,
-                            blurRadius: 10,
-                            offset: const Offset(0, 6), // Push shadow downward
-                          ),
-                        ],
-                      ),
-                      child: OutlinedButton(
-                        style: OutlinedButton.styleFrom(
-                          backgroundColor: Colors.transparent, // Transparent to inherit container color
-                          side: const BorderSide(color: Color(0xFFF5F5F5)), // Border color
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15),
-                          ),
-                        ),
-                        onPressed: () {
-                          // Skip to login Screen
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) =>LoginScreen(),
-                            ),
-                          );
-                        },
-                        child: const Text(
-                          'Skip',
-                          style: TextStyle(
-                            fontSize: 22,
-                            color: Color(0xFF125F9D), // Correct text color
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-
-            SizedBox(height: screenSize.height * 0.03), // 3% of screen height
-          ],
-        ),
+        child: isLandscape
+            ? SingleChildScrollView(
+          child: ConstrainedBox(
+            constraints: BoxConstraints(minHeight: screenSize.height),
+            child: IntrinsicHeight(child: content),
+          ),
+        )
+            : content,
       ),
     );
   }
