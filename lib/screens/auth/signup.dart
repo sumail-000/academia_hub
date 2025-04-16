@@ -8,6 +8,32 @@ class SignupScreen extends StatefulWidget {
 
 class _SignupScreenState extends State<SignupScreen> {
   bool _isObscure = true; // Initially, password is hidden
+  String? _selectedUserType;
+  String? _selectedUniversity;
+  
+  // List of Pakistani universities
+  final List<String> _universities = [
+    'Choose',
+    'Quaid-i-Azam University',
+    'National University of Sciences and Technology (NUST)',
+    'Lahore University of Management Sciences (LUMS)',
+    'University of the Punjab',
+    'University of Karachi',
+    'Pakistan Institute of Engineering and Applied Sciences (PIEAS)',
+    'COMSATS University Islamabad',
+    'Aga Khan University',
+    'Government College University Lahore',
+    'University of Engineering and Technology, Lahore',
+    'NED University of Engineering and Technology',
+    'Bahria University',
+    'Air University',
+    'International Islamic University Islamabad',
+    'University of Peshawar',
+    'University of Agriculture, Faisalabad',
+    'Mehran University of Engineering and Technology',
+    'Institute of Business Administration (IBA)',
+    'National University of Computer and Emerging Sciences (FAST-NUCES)',
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -53,6 +79,46 @@ class _SignupScreenState extends State<SignupScreen> {
                     buildTextField(Icons.email, "Enter your email", false),
                     SizedBox(height: 25),
                     buildTextField(Icons.lock, "Enter your password", true),
+                    SizedBox(height: 25),
+                    
+                    // User type and University selection row
+                    Row(
+                      children: [
+                        // User type dropdown (left side) - with reduced width
+                        Flexible(
+                          flex: 2, // Smaller flex for user type dropdown
+                          child: buildDropdown(
+                            icon: Icons.person_outline,
+                            hint: "User Type",
+                            value: _selectedUserType,
+                            items: ['Choose', 'Student', 'Teacher'],
+                            onChanged: (value) {
+                              setState(() {
+                                _selectedUserType = value;
+                              });
+                            },
+                            dropdownAlignment: AlignmentDirectional.bottomStart,
+                          ),
+                        ),
+                        SizedBox(width: 15),
+                        // University dropdown (right side) - with increased width
+                        Flexible(
+                          flex: 3, // Larger flex for university dropdown
+                          child: buildDropdown(
+                            icon: Icons.school,
+                            hint: "University",
+                            value: _selectedUniversity,
+                            items: _universities,
+                            onChanged: (value) {
+                              setState(() {
+                                _selectedUniversity = value;
+                              });
+                            },
+                            dropdownAlignment: AlignmentDirectional.bottomStart,
+                          ),
+                        ),
+                      ],
+                    ),
 
                     SizedBox(height: 35),
                     SizedBox(
@@ -119,6 +185,70 @@ class _SignupScreenState extends State<SignupScreen> {
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(20),
           borderSide: BorderSide(color: Color(0xFF125F9D), width: 4),
+        ),
+      ),
+    );
+  }
+  
+  Widget buildDropdown({
+    required IconData icon,
+    required String hint,
+    required String? value,
+    required List<String> items,
+    required Function(String?) onChanged,
+    AlignmentDirectional dropdownAlignment = AlignmentDirectional.topStart,
+  }) {
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: Color(0xFF125F9D), width: 3.5),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+        child: DropdownButtonHideUnderline(
+          child: DropdownButton<String>(
+            value: value ?? 'Choose',
+            icon: Icon(Icons.arrow_drop_down, color: Color(0xFF125F9D)),
+            isExpanded: true,
+            hint: Row(
+              children: [
+                Icon(icon, color: Color(0xFF125F9D), size: 24),
+                SizedBox(width: 10),
+                Text(hint, style: TextStyle(color: Color(0xFF125F9D), fontSize: 16)),
+              ],
+            ),
+            dropdownColor: Colors.white,
+            borderRadius: BorderRadius.circular(15),
+            elevation: 8,
+            style: TextStyle(color: Color(0xFF125F9D), fontSize: 16),
+            menuMaxHeight: 300, // Set a max height for long lists
+            itemHeight: 50,
+            dropdownAlignment: dropdownAlignment,
+            items: items.map<DropdownMenuItem<String>>((String value) {
+              return DropdownMenuItem<String>(
+                value: value,
+                child: Row(
+                  children: [
+                    Icon(
+                      value == 'Choose' ? icon : 
+                      (items.length > 5 ? Icons.school : 
+                      (value == 'Student' ? Icons.school : Icons.person_outline)),
+                      color: Color(0xFF125F9D),
+                      size: 24,
+                    ),
+                    SizedBox(width: 10),
+                    Flexible(
+                      child: Text(
+                        value,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            }).toList(),
+            onChanged: onChanged,
+          ),
         ),
       ),
     );
